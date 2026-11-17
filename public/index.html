@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="pt-BR" data-bs-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SMT1 · Administração de Party</title>
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="container-fluid d-flex flex-wrap align-items-center gap-3 py-2">
+    <div class="brand">
+      <span class="brand-mark">SMT</span>
+      <span class="brand-text">
+        <strong>Shin Megami Tensei</strong>
+        <small>administração de party</small>
+      </span>
+    </div>
+    <div class="ms-auto d-flex gap-3 small text-secondary" id="catalog-stats">
+      <span>demônios <strong class="text-light" id="stat-demons">–</strong></span>
+      <span>raças <strong class="text-light" id="stat-races">–</strong></span>
+      <span>skills <strong class="text-light" id="stat-skills">–</strong></span>
+    </div>
+  </div>
+</header>
+
+<nav class="app-tabs">
+  <div class="container-fluid">
+    <ul class="nav nav-tabs" id="main-tabs">
+      <li class="nav-item"><button class="nav-link active" data-view="demons">Demônios</button></li>
+      <li class="nav-item"><button class="nav-link" data-view="fusions">Fusões</button></li>
+      <li class="nav-item"><button class="nav-link" data-view="parties">Parties</button></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="container-fluid py-3">
+
+  <!-- ================= DEMÔNIOS ================= -->
+  <section id="view-demons">
+    <div class="card mb-3">
+      <div class="card-body py-3">
+        <div class="row g-2 align-items-end">
+          <div class="col-12 col-md-3">
+            <label class="form-label small">Buscar por nome</label>
+            <input type="search" class="form-control form-control-sm" id="f-q" placeholder="ex.: Cerberus">
+          </div>
+          <div class="col-6 col-md-2">
+            <label class="form-label small">Raça</label>
+            <select class="form-select form-select-sm" id="f-race"><option value="">Todas</option></select>
+          </div>
+          <div class="col-6 col-md-2">
+            <label class="form-label small">Grupo (species)</label>
+            <select class="form-select form-select-sm" id="f-species"><option value="">Todos</option></select>
+          </div>
+          <div class="col-6 col-md-2">
+            <label class="form-label small">Alinhamento</label>
+            <select class="form-select form-select-sm" id="f-alignment">
+              <option value="">Todos</option>
+              <option>Law</option><option>Neutral</option><option>Chaos</option>
+            </select>
+          </div>
+          <div class="col-3 col-md-1">
+            <label class="form-label small">Nv. mín</label>
+            <input type="number" class="form-control form-control-sm" id="f-level-min" min="1" max="99">
+          </div>
+          <div class="col-3 col-md-1">
+            <label class="form-label small">Nv. máx</label>
+            <input type="number" class="form-control form-control-sm" id="f-level-max" min="1" max="99">
+          </div>
+          <div class="col-12 col-md-1 d-grid">
+            <button class="btn btn-sm btn-outline-secondary" id="f-clear">Limpar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex align-items-center mb-2">
+      <h2 class="h6 mb-0 text-uppercase text-secondary">Demônios</h2>
+      <span class="ms-2 small text-secondary" id="demons-info"></span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-sm table-hover align-middle demons-table">
+        <thead>
+          <tr>
+            <th data-sort="name" class="sortable">Nome</th>
+            <th data-sort="race" class="sortable">Raça</th>
+            <th class="d-none d-md-table-cell">Grupo</th>
+            <th data-sort="level" class="sortable text-end">Nv</th>
+            <th data-sort="hp" class="sortable text-end d-none d-sm-table-cell">HP</th>
+            <th class="text-end d-none d-sm-table-cell">MP</th>
+            <th data-sort="alignment" class="sortable d-none d-lg-table-cell">Alinh.</th>
+            <th class="d-none d-lg-table-cell">Item</th>
+          </tr>
+        </thead>
+        <tbody id="demons-body">
+          <tr><td colspan="8" class="text-center text-secondary py-4">Carregando…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <nav class="d-flex flex-wrap align-items-center gap-2" id="demons-pagination"></nav>
+  </section>
+
+  <!-- ================= FUSÕES ================= -->
+  <section id="view-fusions" hidden>
+    <div class="card mb-3">
+      <div class="card-body py-3">
+        <div class="row g-3 align-items-end">
+          <div class="col-12 col-lg-5">
+            <label class="form-label small">Demônio</label>
+            <select class="form-select form-select-sm" id="fu-demon">
+              <option value="">— escolha um demônio —</option>
+            </select>
+          </div>
+          <div class="col-12 col-lg-4">
+            <label class="form-label small d-block">Modo</label>
+            <div class="btn-group btn-group-sm w-100" role="group">
+              <input type="radio" class="btn-check" name="fu-mode" id="fu-mode-reverse" value="reverse" checked>
+              <label class="btn btn-outline-secondary" for="fu-mode-reverse">Como obter</label>
+
+              <input type="radio" class="btn-check" name="fu-mode" id="fu-mode-forward" value="forward">
+              <label class="btn btn-outline-secondary" for="fu-mode-forward">O que sai dele</label>
+
+              <input type="radio" class="btn-check" name="fu-mode" id="fu-mode-chart" value="chart">
+              <label class="btn btn-outline-secondary" for="fu-mode-chart">Tabela raça × raça</label>
+            </div>
+          </div>
+          <div class="col-12 col-lg-3 small text-secondary" id="fu-hint">
+            Escolha o demônio que você quer <strong>obter</strong>.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="fu-summary" class="mb-2"></div>
+    <div id="fu-empty"></div>
+
+    <div class="table-responsive">
+      <table class="table table-sm table-hover demons-table" id="fu-table">
+        <thead id="fu-head"></thead>
+        <tbody id="fu-body"></tbody>
+      </table>
+    </div>
+
+    <div id="fu-chart" class="mt-3" hidden></div>
+
+    <div id="fu-specials" class="mt-4"></div>
+  </section>
+
+  <!-- ================= PARTIES ================= -->
+  <section id="view-parties" hidden>
+    <div class="d-flex align-items-center mb-3">
+      <h2 class="h6 mb-0 text-uppercase text-secondary">Suas parties</h2>
+      <button class="btn btn-sm btn-danger ms-auto" id="btn-new-party">+ Nova party</button>
+    </div>
+    <div id="parties-list" class="row g-3"></div>
+  </section>
+
+</main>
+
+<!-- ================= MODAL: FICHA DO DEMÔNIO ================= -->
+<div class="modal fade" id="modal-demon" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content" id="demon-detail">
+      <div class="modal-body py-5 text-center text-secondary">Carregando…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODAL: FORMULÁRIO DE PARTY ================= -->
+<div class="modal fade" id="modal-party" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <form id="form-party" novalidate>
+        <div class="modal-header">
+          <h5 class="modal-title" id="party-modal-title">Nova party</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+        </div>
+
+        <div class="modal-body">
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label class="form-label">Nome da party *</label>
+              <input type="text" class="form-control" id="p-name" maxlength="40" required>
+              <div class="invalid-feedback" data-error="name"></div>
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label">Protagonista</label>
+              <input type="text" class="form-control" id="p-protagonist-name" maxlength="40" placeholder="Kazuya">
+              <div class="invalid-feedback" data-error="protagonist_name"></div>
+            </div>
+            <div class="col-3 col-md-1">
+              <label class="form-label">Nível</label>
+              <input type="number" class="form-control" id="p-protagonist-level" min="1" max="99" value="1">
+              <div class="invalid-feedback" data-error="protagonist_level"></div>
+            </div>
+            <div class="col-6 col-md-2">
+              <label class="form-label">Alinhamento</label>
+              <select class="form-select" id="p-alignment">
+                <option value="">—</option>
+                <option>Law</option><option>Neutral</option><option>Chaos</option>
+              </select>
+              <div class="invalid-feedback" data-error="protagonist_alignment"></div>
+            </div>
+
+            <div class="col-12 col-md-6">
+              <label class="form-label">Parceiros humanos <span class="text-secondary small">(informativo)</span></label>
+              <input type="text" class="form-control" id="p-human-partners" maxlength="80" placeholder="Law Hero, Heroína…">
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label">Notas</label>
+              <input type="text" class="form-control" id="p-notes" maxlength="255">
+            </div>
+
+            <div class="col-12">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" id="p-comp-upgraded">
+                <label class="form-check-label" for="p-comp-upgraded">
+                  COMP atualizado (Stephen) — permite <strong>4 demônios</strong> em vez de 3
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <div class="d-flex align-items-center mb-2">
+            <h6 class="mb-0 text-uppercase text-secondary">Formação</h6>
+            <span class="ms-2 small text-secondary">posição 1 = frente · 5 = fundo</span>
+            <span class="ms-auto" id="party-counter"></span>
+          </div>
+
+          <div id="party-slots" class="row g-2"></div>
+
+          <div id="party-warnings" class="mt-3"></div>
+        </div>
+
+        <div class="modal-footer">
+          <span class="me-auto small text-secondary" id="party-form-status"></span>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-danger" id="btn-save-party">Salvar party</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODAL: CONFIRMAR EXCLUSÃO ================= -->
+<div class="modal fade" id="modal-confirm" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Excluir party</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        Excluir a party <strong id="confirm-party-name"></strong>?
+        <p class="small text-secondary mb-0 mt-2">Os demônios da formação são removidos junto. Isso não pode ser desfeito.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-danger btn-sm" id="confirm-delete">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3" id="toasts"></div>
+
+<script src="vendor/jquery.min.js"></script>
+<script src="vendor/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+<script src="js/fusions.js"></script>
+<script src="js/parties.js"></script>
+</body>
+</html>
