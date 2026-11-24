@@ -31,7 +31,7 @@
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
+/*!40101 SET NAMES utf8 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -40,12 +40,12 @@
 
 /*!40000 DROP DATABASE IF EXISTS `smt_db`*/;
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `smt_db` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `smt_db` /*!40100 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci */;
 
 USE `smt_db`;
 DROP TABLE IF EXISTS `dark_race_recipes`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `dark_race_recipes` (
   `dark_race_id` smallint(5) unsigned NOT NULL COMMENT 'Raça "dark" (Vile, Tyrant, Drake, Raptor, Foul, Haunt, Spirit, Undead, Jaki, Wilder)',
   `result_race_id` smallint(5) unsigned NOT NULL COMMENT 'Raça resultante quando dois demônios da mesma raça dark são fundidos',
@@ -53,7 +53,7 @@ CREATE TABLE `dark_race_recipes` (
   KEY `idx_drr_result` (`result_race_id`),
   CONSTRAINT `fk_drr_dark` FOREIGN KEY (`dark_race_id`) REFERENCES `races` (`id`),
   CONSTRAINT `fk_drr_result` FOREIGN KEY (`result_race_id`) REFERENCES `races` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Conversões das 10 raças dark (mapa "darks" do fusion-chart.json). SMT1 mantém o dado, mas a versão atual do site NÃO usa essas regras na listagem de fusões — tabela preservada para consulta/futuro';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Conversões das 10 raças dark (mapa "darks" do fusion-chart.json). SMT1 mantém o dado, mas a versão atual do site NÃO usa essas regras na listagem de fusões — tabela preservada para consulta/futuro';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -74,7 +74,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `demon_resists`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `demon_resists` (
   `demon_id` smallint(5) unsigned NOT NULL,
   `element_id` tinyint(3) unsigned NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE `demon_resists` (
   KEY `idx_resists_effect` (`effect`),
   CONSTRAINT `fk_resists_demon` FOREIGN KEY (`demon_id`) REFERENCES `demons` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_resists_elem` FOREIGN KEY (`element_id`) REFERENCES `elements` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Resistências: 1 linha por demônio x elemento (244 x 14 = 3.416 linhas)';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Resistências: 1 linha por demônio x elemento (244 x 14 = 3.416 linhas)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -3512,7 +3512,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `demon_skills`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `demon_skills` (
   `demon_id` smallint(5) unsigned NOT NULL,
   `skill_id` smallint(5) unsigned NOT NULL,
@@ -3521,7 +3521,7 @@ CREATE TABLE `demon_skills` (
   KEY `idx_ds_skill` (`skill_id`),
   CONSTRAINT `fk_ds_demon` FOREIGN KEY (`demon_id`) REFERENCES `demons` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_ds_skill` FOREIGN KEY (`skill_id`) REFERENCES `skills` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Skills inatas (689 vínculos demônio x skill)';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Skills inatas (689 vínculos demônio x skill)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -4221,7 +4221,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `demons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `demons` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `slug` varchar(60) NOT NULL COMMENT 'Identificador para URL (ex.: baek-young)',
@@ -4255,7 +4255,7 @@ CREATE TABLE `demons` (
   KEY `idx_demons_race_lvl` (`race_id`,`level`),
   KEY `idx_demons_level` (`level`),
   CONSTRAINT `fk_demons_race` FOREIGN KEY (`race_id`) REFERENCES `races` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Os 244 demônios do jogo: nível, raça, atributos e parâmetros de combate';
+) ENGINE=InnoDB AUTO_INCREMENT=245 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Os 244 demônios do jogo: nível, raça, atributos e parâmetros de combate';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -4510,7 +4510,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `element_chart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `element_chart` (
   `element_demon_id` smallint(5) unsigned NOT NULL COMMENT 'Elemental (Salamander, Undine, Sylph, Gnome, Flaemis, Aquans, Aeros, Erthys)',
   `race_id` smallint(5) unsigned NOT NULL,
@@ -4519,7 +4519,7 @@ CREATE TABLE `element_chart` (
   KEY `idx_ec_race` (`race_id`),
   CONSTRAINT `fk_ec_elem` FOREIGN KEY (`element_demon_id`) REFERENCES `demons` (`id`),
   CONSTRAINT `fk_ec_race` FOREIGN KEY (`race_id`) REFERENCES `races` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Como cada elemental desloca o nível quando fundido com um demônio de determinada raça';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Como cada elemental desloca o nível quando fundido com um demônio de determinada raça';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -4682,7 +4682,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `element_fusions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `element_fusions` (
   `element_a_demon_id` smallint(5) unsigned NOT NULL,
   `element_b_demon_id` smallint(5) unsigned NOT NULL,
@@ -4693,7 +4693,7 @@ CREATE TABLE `element_fusions` (
   CONSTRAINT `fk_ef_elem_a` FOREIGN KEY (`element_a_demon_id`) REFERENCES `demons` (`id`),
   CONSTRAINT `fk_ef_elem_b` FOREIGN KEY (`element_b_demon_id`) REFERENCES `demons` (`id`),
   CONSTRAINT `fk_ef_result` FOREIGN KEY (`result_demon_id`) REFERENCES `demons` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Fusões fixas entre dois elementais (ex.: Salamander x Undine = Itzamna)';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Fusões fixas entre dois elementais (ex.: Salamander x Undine = Itzamna)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -4732,7 +4732,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `elements`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `elements` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(12) NOT NULL,
@@ -4741,7 +4741,7 @@ CREATE TABLE `elements` (
   `sort_order` tinyint(3) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_elements_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Elementos: 14 de resistência (sword, gun, fire...) + 5 só de skill (almighty, energy, recovery, support, special)';
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Elementos: 14 de resistência (sword, gun, fire...) + 5 só de skill (almighty, energy, recovery, support, special)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -4771,7 +4771,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `fusion_chart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fusion_chart` (
   `race_a_id` smallint(5) unsigned NOT NULL,
   `race_b_id` smallint(5) unsigned NOT NULL,
@@ -4789,7 +4789,7 @@ CREATE TABLE `fusion_chart` (
   CONSTRAINT `fk_fc_res_de` FOREIGN KEY (`result_demon_id`) REFERENCES `demons` (`id`),
   CONSTRAINT `fk_fc_res_ra` FOREIGN KEY (`result_race_id`) REFERENCES `races` (`id`),
   CONSTRAINT `fk_fc_res_sp` FOREIGN KEY (`result_species_id`) REFERENCES `species` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Chart de fusão normal raça x raça: 239 células preenchidas do chart do site (224 pares + 15 de mesma raça, que geram o elemental). Par normalizado: race_a_id < race_b_id';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Chart de fusão normal raça x raça: 239 células preenchidas do chart do site (224 pares + 15 de mesma raça, que geram o elemental). Par normalizado: race_a_id < race_b_id';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -5039,7 +5039,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `fusion_species_chart`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fusion_species_chart` (
   `species_a_id` tinyint(3) unsigned NOT NULL COMMENT '1o grupo do par que forma o demônio intermediário',
   `species_b_id` tinyint(3) unsigned NOT NULL COMMENT '2o grupo do par (species_a_id < species_b_id)',
@@ -5053,7 +5053,7 @@ CREATE TABLE `fusion_species_chart` (
   CONSTRAINT `fk_fsc_sp_a` FOREIGN KEY (`species_a_id`) REFERENCES `species` (`id`),
   CONSTRAINT `fk_fsc_sp_b` FOREIGN KEY (`species_b_id`) REFERENCES `species` (`id`),
   CONSTRAINT `fk_fsc_sp_c` FOREIGN KEY (`species_c_id`) REFERENCES `species` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Chart de fusões triplas: 28 pares de grupos x 8 terceiros grupos = 224 células';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Chart de fusões triplas: 28 pares de grupos x 8 terceiros grupos = 224 células';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -5288,7 +5288,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `fusions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `fusions` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `result_demon_id` smallint(5) unsigned NOT NULL COMMENT 'Demônio resultante da fusão',
@@ -5303,7 +5303,7 @@ CREATE TABLE `fusions` (
   CONSTRAINT `fk_fusions_a` FOREIGN KEY (`ingredient_a_id`) REFERENCES `demons` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_fusions_b` FOREIGN KEY (`ingredient_b_id`) REFERENCES `demons` (`id`) ON DELETE CASCADE,
   CONSTRAINT `fk_fusions_result` FOREIGN KEY (`result_demon_id`) REFERENCES `demons` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=13986 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Fusões concretas pré-calculadas pelas regras do SMT1 (13.985 linhas): normal ~11.4k, species ~1k, element ~1.5k (inclui os pares entre elementais). "dark" existe no ENUM por fidelidade ao modelo de dados, mas o SMT1 não gera nenhuma linha com essa regra. Par de ingredientes normalizado: ingredient_a_id < ingredient_b_id';
+) ENGINE=InnoDB AUTO_INCREMENT=13986 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Fusões concretas pré-calculadas pelas regras do SMT1 (13.985 linhas): normal ~11.4k, species ~1k, element ~1.5k (inclui os pares entre elementais). "dark" existe no ENUM por fidelidade ao modelo de dados, mas o SMT1 não gera nenhuma linha com essa regra. Par de ingredientes normalizado: ingredient_a_id < ingredient_b_id';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -19299,7 +19299,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `import_log`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `import_log` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `source_url` varchar(255) NOT NULL COMMENT 'Pasta de origem dos JSONs',
@@ -19312,7 +19312,7 @@ CREATE TABLE `import_log` (
   `fusions_count` int(10) unsigned NOT NULL,
   `special_fusions_count` smallint(5) unsigned NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Histórico das importações feitas por import.php';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Histórico das importações feitas por import.php';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -19324,7 +19324,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `parties`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `parties` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(40) NOT NULL COMMENT 'Nome dado pelo jogador à party',
@@ -19338,7 +19338,7 @@ CREATE TABLE `parties` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_parties_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Party do SMT1: protagonista (nome, nível, alinhamento) + até 5 demônios. comp_upgraded guarda o limite 3->4 do jogo';
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Party do SMT1: protagonista (nome, nível, alinhamento) + até 5 demônios. comp_upgraded guarda o limite 3->4 do jogo';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -19348,7 +19348,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `party_demons`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `party_demons` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `party_id` smallint(5) unsigned NOT NULL,
@@ -19361,7 +19361,7 @@ CREATE TABLE `party_demons` (
   CONSTRAINT `fk_pd_demon` FOREIGN KEY (`demon_id`) REFERENCES `demons` (`id`),
   CONSTRAINT `fk_pd_party` FOREIGN KEY (`party_id`) REFERENCES `parties` (`id`) ON DELETE CASCADE,
   CONSTRAINT `chk_pd_slot` CHECK (`slot` between 1 and 5)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Até 5 demônios por party. O SMT1 convoca 3 (4 com o COMP atualizado): o excedente é permitido, mas o app avisa';
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Até 5 demônios por party. O SMT1 convoca 3 (4 com o COMP atualizado): o excedente é permitido, mas o app avisa';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -19371,7 +19371,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `races`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `races` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL,
@@ -19385,7 +19385,7 @@ CREATE TABLE `races` (
   UNIQUE KEY `uq_races_name` (`name`),
   KEY `idx_races_species` (`species_id`),
   CONSTRAINT `fk_races_species` FOREIGN KEY (`species_id`) REFERENCES `species` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Raças dos demônios (Deity, Beast, Fairy, Drake...)';
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Raças dos demônios (Deity, Beast, Fairy, Drake...)';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -19433,7 +19433,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `skills`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `skills` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `slug` varchar(50) NOT NULL,
@@ -19451,7 +19451,7 @@ CREATE TABLE `skills` (
   KEY `idx_skills_element` (`element_id`),
   KEY `idx_skills_cost` (`cost_mp`),
   CONSTRAINT `fk_skills_element` FOREIGN KEY (`element_id`) REFERENCES `elements` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='As 105 skills do jogo';
+) ENGINE=InnoDB AUTO_INCREMENT=106 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='As 105 skills do jogo';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -19567,7 +19567,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `special_fusions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `special_fusions` (
   `id` smallint(5) unsigned NOT NULL AUTO_INCREMENT,
   `target_demon_id` smallint(5) unsigned NOT NULL,
@@ -19585,7 +19585,7 @@ CREATE TABLE `special_fusions` (
   CONSTRAINT `fk_sf_ing2` FOREIGN KEY (`ingredient_2_id`) REFERENCES `demons` (`id`),
   CONSTRAINT `fk_sf_ing3` FOREIGN KEY (`ingredient_3_id`) REFERENCES `demons` (`id`),
   CONSTRAINT `fk_sf_target` FOREIGN KEY (`target_demon_id`) REFERENCES `demons` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Receitas especiais/fixas: pares, trios, pré-requisitos, recrutamento e inimigos';
+) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Receitas especiais/fixas: pares, trios, pré-requisitos, recrutamento e inimigos';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -19645,7 +19645,7 @@ COMMIT;
 SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `species`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8mb4 */;
+/*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `species` (
   `id` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) NOT NULL COMMENT 'Nome do grupo (DEITIES, ICONS, NETHERS, AERIALS, DRAGONS, AVIANS, BEASTS, BRUTES, ELEMENTS, SPIRITS, FOULS, HUMANS, MACHINES)',
@@ -19653,7 +19653,7 @@ CREATE TABLE `species` (
   `sort_order` tinyint(3) unsigned NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_species_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Agrupamento de raças usado pelas regras de fusão (antigo "species")';
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci COMMENT='Agrupamento de raças usado pelas regras de fusão (antigo "species")';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 SET @OLD_AUTOCOMMIT=@@AUTOCOMMIT, @@AUTOCOMMIT=0;
@@ -19678,7 +19678,7 @@ SET AUTOCOMMIT=@OLD_AUTOCOMMIT;
 DROP TABLE IF EXISTS `v_demon_skills`;
 /*!50001 DROP VIEW IF EXISTS `v_demon_skills`*/;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8mb4;
+SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_demon_skills` AS SELECT
  1 AS `demon_id`,
   1 AS `slug`,
@@ -19698,7 +19698,7 @@ SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `v_demons`;
 /*!50001 DROP VIEW IF EXISTS `v_demons`*/;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8mb4;
+SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_demons` AS SELECT
  1 AS `id`,
   1 AS `slug`,
@@ -19734,7 +19734,7 @@ SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `v_fusions`;
 /*!50001 DROP VIEW IF EXISTS `v_fusions`*/;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8mb4;
+SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_fusions` AS SELECT
  1 AS `id`,
   1 AS `rule`,
@@ -19757,7 +19757,7 @@ SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `v_parties_completo`;
 /*!50001 DROP VIEW IF EXISTS `v_parties_completo`*/;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8mb4;
+SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_parties_completo` AS SELECT
  1 AS `party_id`,
   1 AS `party`,
@@ -19776,7 +19776,7 @@ SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `v_parties_resumo`;
 /*!50001 DROP VIEW IF EXISTS `v_parties_resumo`*/;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8mb4;
+SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_parties_resumo` AS SELECT
  1 AS `party_id`,
   1 AS `party`,
@@ -19794,7 +19794,7 @@ SET character_set_client = @saved_cs_client;
 DROP TABLE IF EXISTS `v_resistances`;
 /*!50001 DROP VIEW IF EXISTS `v_resistances`*/;
 SET @saved_cs_client     = @@character_set_client;
-SET character_set_client = utf8mb4;
+SET character_set_client = utf8;
 /*!50001 CREATE VIEW `v_resistances` AS SELECT
  1 AS `demon_id`,
   1 AS `slug`,
@@ -19811,9 +19811,9 @@ USE `smt_db`;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_uca1400_ai_ci */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_demon_skills` AS select `d`.`id` AS `demon_id`,`d`.`slug` AS `slug`,`d`.`name` AS `demon`,`d`.`level` AS `level`,`s`.`id` AS `skill_id`,`s`.`name` AS `skill`,`e`.`name` AS `element`,`s`.`power` AS `power`,`s`.`cost_mp` AS `cost_mp`,`s`.`is_extra` AS `is_extra`,`s`.`target` AS `target`,`s`.`effect` AS `effect`,`s`.`is_enemy` AS `is_enemy`,`ds`.`slot` AS `slot` from (((`demon_skills` `ds` join `demons` `d` on(`d`.`id` = `ds`.`demon_id`)) join `skills` `s` on(`s`.`id` = `ds`.`skill_id`)) join `elements` `e` on(`e`.`id` = `s`.`element_id`)) */;
@@ -19824,9 +19824,9 @@ USE `smt_db`;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_uca1400_ai_ci */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_demons` AS select `d`.`id` AS `id`,`d`.`slug` AS `slug`,`d`.`name` AS `name`,`d`.`race_id` AS `race_id`,`r`.`name` AS `race`,`sp`.`id` AS `species_id`,`sp`.`name` AS `species`,`d`.`level` AS `level`,`d`.`align_code` AS `align_code`,`d`.`alignment` AS `alignment`,`r`.`light_dark` AS `race_light_dark`,`d`.`drop_item` AS `drop_item`,`d`.`hp` AS `hp`,`d`.`mp` AS `mp`,`d`.`cp` AS `cp`,`d`.`strength` AS `strength`,`d`.`intelligence` AS `intelligence`,`d`.`magic` AS `magic`,`d`.`vitality` AS `vitality`,`d`.`agility` AS `agility`,`d`.`luck` AS `luck`,`d`.`natk` AS `natk`,`d`.`nmin` AS `nmin`,`d`.`nmax` AS `nmax`,`d`.`patk` AS `patk`,`d`.`phit` AS `phit`,`d`.`defense` AS `defense`,`d`.`evasion` AS `evasion`,`d`.`matk` AS `matk`,`d`.`mhit` AS `mhit` from ((`demons` `d` join `races` `r` on(`r`.`id` = `d`.`race_id`)) join `species` `sp` on(`sp`.`id` = `r`.`species_id`)) */;
@@ -19837,9 +19837,9 @@ USE `smt_db`;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_uca1400_ai_ci */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_fusions` AS select `f`.`id` AS `id`,`f`.`rule` AS `rule`,`res`.`id` AS `result_demon_id`,`res`.`slug` AS `result_slug`,`res`.`name` AS `result`,`rr`.`name` AS `result_race`,`res`.`level` AS `result_level`,`ia`.`id` AS `ingredient_a_id`,`ia`.`slug` AS `ingredient_a_slug`,`ia`.`name` AS `ingredient_a`,`ia`.`level` AS `ingredient_a_level`,`ra`.`name` AS `ingredient_a_race`,`ib`.`id` AS `ingredient_b_id`,`ib`.`slug` AS `ingredient_b_slug`,`ib`.`name` AS `ingredient_b`,`ib`.`level` AS `ingredient_b_level`,`rb`.`name` AS `ingredient_b_race` from ((((((`fusions` `f` join `demons` `res` on(`res`.`id` = `f`.`result_demon_id`)) join `races` `rr` on(`rr`.`id` = `res`.`race_id`)) join `demons` `ia` on(`ia`.`id` = `f`.`ingredient_a_id`)) join `races` `ra` on(`ra`.`id` = `ia`.`race_id`)) join `demons` `ib` on(`ib`.`id` = `f`.`ingredient_b_id`)) join `races` `rb` on(`rb`.`id` = `ib`.`race_id`)) */;
@@ -19850,9 +19850,9 @@ USE `smt_db`;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_uca1400_ai_ci */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_parties_completo` AS select `p`.`id` AS `party_id`,`p`.`name` AS `party`,`p`.`protagonist_name` AS `protagonist_name`,`p`.`protagonist_level` AS `protagonist_level`,`p`.`protagonist_alignment` AS `protagonist_alignment`,`p`.`comp_upgraded` AS `comp_upgraded`,`p`.`human_partners` AS `human_partners`,`pd`.`slot` AS `slot`,`d`.`id` AS `demon_id`,`d`.`slug` AS `slug`,`d`.`name` AS `demon`,`r`.`name` AS `race`,`d`.`level` AS `demon_level` from (((`parties` `p` join `party_demons` `pd` on(`pd`.`party_id` = `p`.`id`)) join `demons` `d` on(`d`.`id` = `pd`.`demon_id`)) join `races` `r` on(`r`.`id` = `d`.`race_id`)) */;
@@ -19863,9 +19863,9 @@ USE `smt_db`;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_uca1400_ai_ci */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_parties_resumo` AS select `p`.`id` AS `party_id`,`p`.`name` AS `party`,`p`.`protagonist_name` AS `protagonist_name`,`p`.`protagonist_level` AS `protagonist_level`,`p`.`protagonist_alignment` AS `protagonist_alignment`,`p`.`comp_upgraded` AS `comp_upgraded`,`p`.`human_partners` AS `human_partners`,`p`.`notes` AS `notes`,count(`pd`.`id`) AS `demon_count`,case when `p`.`comp_upgraded` = 1 then 4 else 3 end AS `comp_limit`,`p`.`created_at` AS `created_at`,`p`.`updated_at` AS `updated_at` from (`parties` `p` left join `party_demons` `pd` on(`pd`.`party_id` = `p`.`id`)) group by `p`.`id` */;
@@ -19876,9 +19876,9 @@ USE `smt_db`;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
 /*!50001 SET @saved_col_connection     = @@collation_connection */;
-/*!50001 SET character_set_client      = utf8mb4 */;
-/*!50001 SET character_set_results     = utf8mb4 */;
-/*!50001 SET collation_connection      = utf8mb4_uca1400_ai_ci */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
 /*!50013 DEFINER=`root`@`127.0.0.1` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_resistances` AS select `d`.`id` AS `demon_id`,`d`.`slug` AS `slug`,`d`.`name` AS `demon`,`r`.`name` AS `race`,`e`.`id` AS `element_id`,`e`.`name` AS `element`,`dr`.`effect` AS `effect`,`dr`.`damage_pct` AS `damage_pct` from (((`demon_resists` `dr` join `demons` `d` on(`d`.`id` = `dr`.`demon_id`)) join `races` `r` on(`r`.`id` = `d`.`race_id`)) join `elements` `e` on(`e`.`id` = `dr`.`element_id`)) */;
